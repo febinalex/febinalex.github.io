@@ -192,7 +192,7 @@
   <main>
     <div id="intro-scroll-track"></div>
 
-    <section class="content">
+    <section class="content" id="about-me">
       <div class="glass-panel gs-reveal">
         <h2>About Me</h2>
         <div class="tech-grid">
@@ -289,9 +289,31 @@
       .to("#msg-2", { opacity: 1, duration: 0.8 })
       .to("#msg-2", { opacity: 0, duration: 0.8, delay: 0.25 })
       .to("#msg-3", { opacity: 1, duration: 1 })
-      .to("#msg-3", { opacity: 0, duration: 0.8, delay: 0.35 });
+      .to("#msg-3", { opacity: 0, duration: 0.8, delay: 0.35 })
+      .to("#intro-text-container", { opacity: 0, y: -20, duration: 0.45 }, "-=0.2");
 
     const videoWrap = document.getElementById("heroVideoWrap");
+    const introTextContainer = document.getElementById("intro-text-container");
+    const videoMotion = {
+      introProgress: 0,
+      aboutProgress: 0
+    };
+
+    function applyVideoMotion() {
+      const isMobile = window.innerWidth <= 980;
+      const shift = isMobile ? 24 : Math.min(window.innerWidth * 0.22, 260);
+      const introDrop = isMobile ? 36 : Math.min(window.innerHeight * 0.2, 180);
+      const aboutLift = isMobile ? Math.min(window.innerHeight * 1.05, 560) : 0;
+      const totalY = (videoMotion.introProgress * introDrop) - (videoMotion.aboutProgress * aboutLift);
+      const totalOpacity = isMobile ? Math.max(0, 1 - videoMotion.aboutProgress) : 1;
+
+      gsap.set(videoWrap, {
+        x: -videoMotion.introProgress * shift,
+        y: totalY,
+        scale: 1 - videoMotion.introProgress * 0.18,
+        opacity: totalOpacity
+      });
+    }
 
     ScrollTrigger.create({
       trigger: "#intro-scroll-track",
@@ -299,14 +321,31 @@
       end: "bottom top",
       scrub: true,
       onUpdate: (self) => {
-        const progress = self.progress;
-        const shift = window.innerWidth <= 980 ? 24 : Math.min(window.innerWidth * 0.22, 260);
-        const drop = window.innerWidth <= 980 ? 36 : Math.min(window.innerHeight * 0.2, 180);
-        gsap.set(videoWrap, {
-          x: -progress * shift,
-          y: progress * drop,
-          scale: 1 - progress * 0.18
-        });
+        videoMotion.introProgress = self.progress;
+        applyVideoMotion();
+      }
+    });
+
+    ScrollTrigger.create({
+      trigger: "#about-me",
+      start: "top 85%",
+      end: "bottom top",
+      scrub: true,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        videoMotion.aboutProgress = self.progress;
+        applyVideoMotion();
+      }
+    });
+
+    ScrollTrigger.create({
+      trigger: "#about-me",
+      start: "top 70%",
+      onEnter: () => {
+        gsap.set(introTextContainer, { autoAlpha: 0, y: -20 });
+      },
+      onLeaveBack: () => {
+        gsap.set(introTextContainer, { autoAlpha: 1, y: 0 });
       }
     });
 
