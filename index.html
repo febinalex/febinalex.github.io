@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Febin Alex | AI & Cloud Engineer</title>
+  <style>
+    :root {
+      --primary: #00ffcc;
+      --bg: #050505;
+      --text: #e0e0e0;
+      --glass: rgba(10, 10, 10, 0.6);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Fixed 3D Canvas */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* --- Intro Sequence Text Styling (Right Side) --- */
+    #intro-text-container {
+      position: fixed;
+      top: 50%;
+      right: 10%; /* Placed on the right */
+      transform: translateY(-50%);
+      width: 40%;
+      text-align: left;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .intro-msg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 3.5rem;
+      font-weight: 300;
+      opacity: 0; /* Hidden by default, GSAP handles this */
+      width: 100%;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    }
+
+    /* Invisible track to handle the 3 phases of the intro scroll */
+    #intro-scroll-track {
+      height: 400vh; 
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Typography & Layout */
+    h1, h2, h3 { font-weight: 300; letter-spacing: 1px; }
+    h2 { font-size: 2.5rem; margin-bottom: 1.5rem; color: #fff; }
+    .highlight { color: var(--primary); font-weight: 500; }
+
+    main { position: relative; z-index: 1; }
+
+    /* Content sections aligned to the right */
+    section.content {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end; /* Pushes content to the right */
+      padding: 0 10%;
+      position: relative;
+    }
+
+    .glass-panel {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 3rem;
+      width: 100%;
+      max-width: 700px; /* Constrain width so it stays on the right */
+      transform: translateY(50px);
+      opacity: 0; /* Handled by GSAP */
+      margin-bottom: 10vh;
+    }
+
+    /* Grid for Tech Stack */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .tech-item {
+      border-left: 2px solid var(--primary);
+      padding-left: 1rem;
+    }
+
+    ul { list-style: none; }
+    ul li::before {
+      content: '▹';
+      color: var(--primary);
+      margin-right: 10px;
+    }
+
+    a { color: var(--primary); text-decoration: none; transition: opacity 0.3s; }
+    a:hover { opacity: 0.7; }
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <canvas id="webgl-canvas"></canvas>
+
+  <div id="intro-text-container">
+    <div class="intro-msg" id="msg-1">Hi 👋</div>
+    <div class="intro-msg" id="msg-2">Welcome</div>
+    <div class="intro-msg" id="msg-3" style="font-size: 2.5rem;">Thank you for visiting my portfolio,<br><span class="highlight">fellow engineer!</span></div>
+  </div>
+
+  <main>
+    <div id="intro-scroll-track"></div>
+
+    <section class="content">
+      <div class="glass-panel gs-reveal">
+        <h2>About Me</h2>
+        <div class="tech-grid">
+          <div class="tech-item"><span style="color:#888">Name:</span><br><span class="highlight">Febin Alex</span></div>
+          <div class="tech-item"><span style="color:#888">Role:</span><br>AI & Cloud Engineer</div>
+          <div class="tech-item"><span style="color:#888">Background:</span><br>Python ML, Data Eng, Enterprise IT</div>
+          <div class="tech-item"><span style="color:#888">Organization:</span><br>Hidden</div>
+          <div class="tech-item" style="grid-column: 1 / -1;"><span style="color:#888">Focus:</span><br>Automation • AI Systems • ETL • CCM</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="glass-panel gs-reveal">
+        <h2>Tech Stack</h2>
+        <div class="tech-grid">
+          <div class="tech-item"><strong>Frontend</strong><br>HTML5, CSS3, JS</div>
+          <div class="tech-item"><strong>3D Engine & Anim</strong><br>Three.js, GSAP, ScrollTrigger</div>
+          <div class="tech-item"><strong>Cloud</strong><br>AWS , Google Cloud</div>
+          <div class="tech-item"><strong>Backend</strong><br>Python, Node.js</div>
+          <div class="tech-item"><strong>Data & BI</strong><br>SQL, MongoDB, Informatica, Tableau</div>
+          <div class="tech-item"><strong>Enterprise</strong><br>Java, OpenText Exstream</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="glass-panel gs-reveal">
+        <h2>Architecture Philosophy</h2>
+        <ul>
+          <li>Prevent Operations Errors by Design</li>
+          <li>AI-driven automation for DevOps</li>
+          <li>Scalable, cloud-native systems</li>
+          <li>Security-first engineering</li>
+        </ul>
+        
+        <h2 style="margin-top: 3rem;">AI & Automation Projects</h2>
+        <ul>
+          <li>DevOps CI/CD Issue Analyzer</li>
+          <li>Natural Language → SQL Generator</li>
+          <li>Test Data Generation Automation</li>
+          <li>Cloud-based ML Pipelines (AWS SageMaker)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="glass-panel gs-reveal">
+        <h2>Currently Exploring</h2>
+        <ul>
+          <li>Advanced Enterprise Architecture</li>
+          <li>Cloud-Native AI Systems</li>
+          <li>Distributed System Design</li>
+        </ul>
+
+        <h2 style="margin-top: 3rem;">Connect</h2>
+        <p>
+          <a href="https://github.com/hidden" target="_blank">GitHub</a> &nbsp;|&nbsp; 
+          <a href="https://linkedin.com/in/hidden" target="_blank">LinkedIn</a> &nbsp;|&nbsp; 
+          <a href="mailto:null@null.com">Email</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    // --- 1. Setup Scene ---
+    const canvas = document.querySelector('#webgl-canvas');
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x050505, 0.05);
+
+    // Position camera closer so the avatar is clearly visible
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 1, 6); 
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // --- 2. Lighting ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+    scene.add(ambientLight);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2);
+    dirLight.position.set(2, 2, 5);
+    scene.add(dirLight);
+
+    // --- 3. Background Data Cloud & Core ---
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 1500;
+    const posArray = new Float32Array(particlesCount * 3);
+
+    for(let i = 0; i < particlesCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * 40; // Spread adjusted for new camera
+    }
+    
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.05,
+      color: 0x00ffcc,
+      transparent: true,
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending
+    });
+    const particlesMesh = new THREE.Points(particlesGeometry, particleMaterial);
+    scene.add(particlesMesh);
+
+    const coreGeometry = new THREE.IcosahedronGeometry(2, 1);
+    const coreMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0x444444, 
+      wireframe: true, 
+      transparent: true, 
+      opacity: 0.15 
+    });
+    const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
+    scene.add(coreMesh);
+
+    // --- 4. Load the 3D Avatar ---
+    let avatarModel;
+    let mixer; 
+    const loader = new GLTFLoader();
+
+    loader.load(
+  'avatar.glb',
+  (gltf) => {
+    avatarModel = gltf.scene;
+
+    // 🔥 FIX TRANSPARENCY HERE
+    avatarModel.traverse((child) => {
+  if (child.isMesh) {
+
+    const texture = child.material.map;
+
+    if (texture) {
+      texture.minFilter = THREE.LinearMipMapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      texture.needsUpdate = true;
+    }
+
+    child.material.transparent = true;
+    child.material.alphaTest = 0.5;
+    child.material.depthWrite = false;
+  }
+});
+
+    avatarModel.position.set(-1.5, -1.5, -1);
+    avatarModel.scale.set(8.5, 8.5, 8.5);
+    avatarModel.rotation.y = 0.3;
+
+    scene.add(avatarModel);
+
+    if (gltf.animations.length > 0) {
+      mixer = new THREE.AnimationMixer(avatarModel);
+      const waveAction = mixer.clipAction(gltf.animations[0]);
+      waveAction.play();
+    }
+
+    setupScrollAnimations();
+  },
+  undefined,
+  (error) => console.error('Error loading avatar.glb:', error)
+);
+
+    // --- 5. GSAP Sequence Logic ---
+    gsap.registerPlugin(ScrollTrigger);
+
+    function setupScrollAnimations() {
+      // Intro Timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#intro-scroll-track",
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+        }
+      });
+
+      // PHASE 1: "Hi" 
+      tl.to("#msg-1", { opacity: 1, duration: 1 })
+        .to("#msg-1", { opacity: 0, duration: 1, delay: 0.5 });
+
+      // PHASE 2: "Welcome" 
+      tl.to("#msg-2", { opacity: 1, duration: 1 })
+        .to("#msg-2", { opacity: 0, duration: 1, delay: 0.5 });
+
+      // PHASE 3: "Thank you..." 
+      tl.to("#msg-3", { opacity: 1, duration: 1 })
+        .to("#msg-3", { opacity: 0, duration: 1, delay: 0.5 });
+
+      // PHASE 4: Move avatar further into the left corner
+      tl.to(avatarModel.position, {
+        x: -3.5, 
+        y: 1,
+        z: 1, 
+        duration: 3
+      }, "-=2"); 
+
+      // PHASE 5: Smile logic
+      avatarModel.traverse((child) => {
+        if (child.isMesh && child.morphTargetDictionary) {
+          const smileIndex = child.morphTargetDictionary['mouthSmile'] || child.morphTargetDictionary['smile'];
+          if (smileIndex !== undefined) {
+            gsap.to(child.morphTargetInfluences, {
+              [smileIndex]: 1, 
+              scrollTrigger: {
+                trigger: ".content",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+              }
+            });
+          }
+        }
+      });
+
+      // --- Main Content Animations ---
+      // Fade in Glass Panels
+      const panels = gsap.utils.toArray('.gs-reveal');
+      panels.forEach((panel) => {
+        gsap.to(panel, {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          scrollTrigger: {
+            trigger: panel,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play reverse play reverse"
+          }
+        });
+      });
+
+      // Rotate Background Tied to Scroll
+      gsap.to(particlesMesh.rotation, {
+        y: Math.PI * 1.5,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "body",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1
+        }
+      });
+
+      gsap.to(coreMesh.rotation, {
+        y: -Math.PI * 2,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "body",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 2
+        }
+      });
+    }
+
+    // --- 6. Animation Loop ---
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const elapsedTime = clock.getElapsedTime();
+      
+      if (mixer) mixer.update(delta);
+      
+      // Idle breathing/floating animation for background and avatar
+      if (avatarModel) {
+          avatarModel.position.y += Math.sin(elapsedTime * 2) * 0.0005;
+      }
+      particlesMesh.position.y = Math.sin(elapsedTime * 0.5) * 0.5;
+      coreMesh.rotation.x += 0.001;
+      coreMesh.rotation.y += 0.002;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Handle Resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
