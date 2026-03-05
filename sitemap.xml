@@ -21,5 +21,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
+  
+  <!-- Kochi Metro Connect -->
+  <url>
+    <loc>https://febinalex.github.io/kochimetroconnect/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
